@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데일리 살림 셀렉트</title>
+<meta name="description" content="틱톡·릴스·쇼츠 영상 속 상품을 번호로 찾는 링크허브">
+<style>
+:root {
+  --bg: #FAF7F1;
+  --card-bg: #FFFFFF;
+  --ink: #232323;
+  --muted: #75808a;
+  --accent: #FF6B6B;
+  --accent2: #FFCD3C;
+  --border: #ECE3D4;
+  --banner-bg: #FFF1D6;
+  --banner-ink: #7A4B00;
+  --inapp-bg: #FFF7E0;
+  --inapp-ink: #8A6200;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161b;
+    --card-bg: #1e2128;
+    --ink: #f0f0f0;
+    --muted: #9aa2ad;
+    --accent: #FF8686;
+    --accent2: #FFD766;
+    --border: #2b2f38;
+    --banner-bg: #3a2c10;
+    --banner-ink: #FFD9A0;
+    --inapp-bg: #33290c;
+    --inapp-ink: #FFDD99;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Malgun Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+a { color: inherit; }
+.disclosure-banner {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--banner-bg);
+  color: var(--banner-ink);
+  font-size: 12.5px;
+  padding: 8px 14px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+.inapp-banner {
+  background: var(--inapp-bg);
+  color: var(--inapp-ink);
+  font-size: 12.5px;
+  text-align: center;
+  padding: 8px 14px;
+}
+.profile { text-align: center; padding: 22px 16px 6px; }
+.profile h1 { font-size: 21px; margin: 4px 0; }
+.bio { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
+.search-wrap { padding: 16px 16px 4px; }
+.search {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--ink);
+}
+.search:focus { outline: 2px solid var(--accent); }
+.no-results { text-align: center; color: var(--muted); font-size: 13px; margin: 10px 0 0; }
+.section { padding: 6px 16px 18px; }
+.section-title { font-size: 14px; color: var(--muted); margin: 14px 4px 10px; font-weight: 600; }
+.card-list { display: flex; flex-direction: column; gap: 10px; }
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px;
+}
+.badge {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  background: var(--accent2);
+  color: #3a2600;
+  font-weight: 700;
+  font-size: 13px;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,.18);
+}
+.thumb { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex-shrink: 0; background: #eee; }
+.thumb-fallback { display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; }
+.card-body { flex: 1; min-width: 0; }
+.name {
+  font-size: 14.5px;
+  font-weight: 600;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.price { font-size: 15px; font-weight: 700; color: var(--accent); margin-top: 3px; }
+.meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.cta {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+}
+.cta:active { opacity: .8; }
+.footer { text-align: center; color: var(--muted); font-size: 11.5px; padding: 22px 16px 44px; }
+.footer p { margin: 4px 0; }
+</style>
+</head>
+<body>
+<div class="disclosure-banner">📌 이 페이지의 링크로 상품 구매 시 쿠팡파트너스·네이버 쇼핑커넥트 활동의 일환으로 일정액의 수수료를 제공받습니다</div>
+<div id="inapp-banner" class="inapp-banner" hidden>📱 우측 상단 ⋯ → 브라우저에서 열기를 누르면 할인가 적용이 정확해요</div>
+
+<header class="profile">
+  <h1>데일리 살림 셀렉트</h1>
+  <p class="bio">직접 비교하고 고른 살림 꿀템<br>영상 속 제품은 번호로 검색<br>매일 업데이트</p>
+</header>
+
+<div class="search-wrap">
+  <input type="search" id="q" class="search" placeholder="영상 속 번호 또는 상품명 검색" oninput="filterCards(this.value)" autocomplete="off">
+</div>
+<p id="no-results" class="no-results" hidden>검색 결과가 없어요</p>
+
+<section class="section">
+  <h2 class="section-title">쿠팡 상품 (10)</h2>
+  <div class="card-list">
+<div class="card" data-search="10 실버바"><div class="badge">10</div><div class="thumb thumb-fallback" style="background: hsl(144 70% 88%); color: hsl(144 45% 32%);">실</div><div class="card-body"><div class="name">실버바</div><a class="cta" href="https://link.coupang.com/a/fikDp90kMu" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="9 하기스 기저귀 3단계"><div class="badge">9</div><div class="thumb thumb-fallback" style="background: hsl(254 70% 88%); color: hsl(254 45% 32%);">하</div><div class="card-body"><div class="name">하기스 기저귀 3단계</div><a class="cta" href="https://link.coupang.com/a/fikWVeGtIy" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="8 미끄럼방지 욕실화"><div class="badge">8</div><div class="thumb thumb-fallback" style="background: hsl(341 70% 88%); color: hsl(341 45% 32%);">미</div><div class="card-body"><div class="name">미끄럼방지 욕실화</div><a class="cta" href="https://link.coupang.com/a/filMltCoua" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="7 에프킬라 모기·해충 스프레이"><div class="badge">7</div><div class="thumb thumb-fallback" style="background: hsl(315 70% 88%); color: hsl(315 45% 32%);">에</div><div class="card-body"><div class="name">에프킬라 모기·해충 스프레이</div><a class="cta" href="https://link.coupang.com/a/filO2f7dF6" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="6 롯데월드 입장권"><div class="badge">6</div><div class="thumb thumb-fallback" style="background: hsl(252 70% 88%); color: hsl(252 45% 32%);">롯</div><div class="card-body"><div class="name">롯데월드 입장권</div><a class="cta" href="https://link.coupang.com/a/fikM8yT4uW" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="5 아쿠아슈즈"><div class="badge">5</div><div class="thumb thumb-fallback" style="background: hsl(213 70% 88%); color: hsl(213 45% 32%);">아</div><div class="card-body"><div class="name">아쿠아슈즈</div><a class="cta" href="https://link.coupang.com/a/filIC9RrGe" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="4 어린이 물총"><div class="badge">4</div><div class="thumb thumb-fallback" style="background: hsl(20 70% 88%); color: hsl(20 45% 32%);">어</div><div class="card-body"><div class="name">어린이 물총</div><a class="cta" href="https://link.coupang.com/a/fik5fCrgDk" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="3 탄산수"><div class="badge">3</div><div class="thumb thumb-fallback" style="background: hsl(163 70% 88%); color: hsl(163 45% 32%);">탄</div><div class="card-body"><div class="name">탄산수</div><a class="cta" href="https://link.coupang.com/a/fikMgbX3lY" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="2 포카리스웨트"><div class="badge">2</div><div class="thumb thumb-fallback" style="background: hsl(12 70% 88%); color: hsl(12 45% 32%);">포</div><div class="card-body"><div class="name">포카리스웨트</div><a class="cta" href="https://link.coupang.com/a/fikJtoIKjs" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="1 토레타 이온음료"><div class="badge">1</div><div class="thumb thumb-fallback" style="background: hsl(211 70% 88%); color: hsl(211 45% 32%);">토</div><div class="card-body"><div class="name">토레타 이온음료</div><a class="cta" href="https://link.coupang.com/a/fikIgPTvWK" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section-title">네이버 쇼핑커넥트 (7)</h2>
+  <div class="card-list">
+<div class="card" data-search="비에논 우레이드 기미앰플"><div class="thumb thumb-fallback" style="background: hsl(22 70% 88%); color: hsl(22 45% 32%);">비</div><div class="card-body"><div class="name">비에논 우레이드 기미앰플</div><div class="price">36,800원</div><div class="meta">평점 4.62 · 리뷰 6,138</div><a class="cta" href="https://naver.me/FpwgyE4j" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="바자르 냉감 이불 ss"><div class="thumb thumb-fallback" style="background: hsl(96 70% 88%); color: hsl(96 45% 32%);">바</div><div class="card-body"><div class="name">바자르 냉감 이불 SS</div><div class="price">27,900원</div><div class="meta">평점 4.81 · 리뷰 4,532</div><a class="cta" href="https://naver.me/IGseN8MR" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="잇퓨 율무 나이아신아마이드 순율 크림 50ml"><div class="thumb thumb-fallback" style="background: hsl(37 70% 88%); color: hsl(37 45% 32%);">잇</div><div class="card-body"><div class="name">잇퓨 율무 나이아신아마이드 순율 크림 50ml</div><div class="price">24,900원</div><div class="meta">평점 4.55 · 리뷰 11,858</div><a class="cta" href="https://naver.me/FVFOWI25" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="미라클뮤즈 aha bha 메디크림"><div class="thumb thumb-fallback" style="background: hsl(93 70% 88%); color: hsl(93 45% 32%);">미</div><div class="card-body"><div class="name">미라클뮤즈 AHA BHA 메디크림</div><div class="price">28,900원</div><div class="meta">평점 4.66 · 리뷰 17,506</div><a class="cta" href="https://naver.me/GhwAFGc0" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="닥터블랭크 저자극 올인원 강아지 샴푸"><div class="thumb thumb-fallback" style="background: hsl(138 70% 88%); color: hsl(138 45% 32%);">닥</div><div class="card-body"><div class="name">닥터블랭크 저자극 올인원 강아지 샴푸</div><div class="price">14,900원</div><div class="meta">평점 4.89 · 리뷰 6,950</div><a class="cta" href="https://naver.me/xWId2nUp" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="세면대 워터탭 아기 비데 회전 수전 (스윙1+필터3)"><div class="thumb thumb-fallback" style="background: hsl(327 70% 88%); color: hsl(327 45% 32%);">세</div><div class="card-body"><div class="name">세면대 워터탭 아기 비데 회전 수전 (스윙1+필터3)</div><div class="price">19,800원</div><div class="meta">평점 4.84 · 리뷰 31,076</div><a class="cta" href="https://naver.me/Ix0cYBlQ" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="온다숲 천연 제습제 5개 (반영구·국산)"><div class="thumb thumb-fallback" style="background: hsl(282 70% 88%); color: hsl(282 45% 32%);">온</div><div class="card-body"><div class="name">온다숲 천연 제습제 5개 (반영구·국산)</div><div class="price">23,900원</div><div class="meta">평점 4.73 · 리뷰 5,705</div><a class="cta" href="https://naver.me/xB7AgHyp" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>📌 이 페이지의 링크로 상품 구매 시 쿠팡파트너스·네이버 쇼핑커넥트 활동의 일환으로 일정액의 수수료를 제공받습니다</p>
+  <p>가격·재고는 변동될 수 있습니다</p>
+</footer>
+
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  if (/Instagram|TikTok|KAKAOTALK|NAVER/i.test(ua)) {
+    var b = document.getElementById('inapp-banner');
+    if (b) b.hidden = false;
+  }
+})();
+
+function filterCards(raw) {
+  var q = (raw || '').trim().toLowerCase();
+  var cards = document.querySelectorAll('.card');
+  var visible = 0;
+  cards.forEach(function (card) {
+    var hay = card.getAttribute('data-search') || '';
+    var match = q === '' || hay.indexOf(q) !== -1;
+    card.style.display = match ? '' : 'none';
+    if (match) visible += 1;
+  });
+  var noResults = document.getElementById('no-results');
+  if (noResults) noResults.hidden = visible !== 0;
+}
+</script>
+</body>
+</html>
