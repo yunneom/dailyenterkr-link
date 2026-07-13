@@ -5,40 +5,50 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>데일리 살림 셀렉트</title>
 <meta name="description" content="틱톡·릴스·쇼츠 영상 속 상품을 번호로 찾는 링크허브">
+<meta property="og:title" content="데일리 살림 셀렉트">
+<meta property="og:description" content="틱톡·릴스·쇼츠 영상 속 상품을 번호로 찾는 링크허브">
+<meta name="theme-color" content="#F2F4EF">
+<meta name="theme-color" content="#131A16" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='4' y='4' width='16' height='16' rx='5' fill='%232F6F5C' transform='rotate(-8 12 12)'/%3E%3Ccircle cx='15' cy='9' r='1.5' fill='%23F2F4EF'/%3E%3C/svg%3E">
 <style>
 :root {
-  --bg: #FAF7F1;
+  --paper: #F2F4EF;
   --card-bg: #FFFFFF;
-  --ink: #232323;
-  --muted: #75808a;
-  --accent: #FF6B6B;
-  --accent2: #FFCD3C;
-  --border: #ECE3D4;
-  --banner-bg: #FFF1D6;
-  --banner-ink: #7A4B00;
-  --inapp-bg: #FFF7E0;
-  --inapp-ink: #8A6200;
+  --ink: #1F2A24;
+  --muted: #5B6A61;
+  --pine: #2F6F5C;
+  --pine-soft: #DCEBE4;
+  --tag: #E2932E;
+  --tag-ink: #3A2600;
+  --line: #E1E4DC;
+  --banner-bg: #EAF1EC;
+  --banner-ink: #1F4A3B;
+  --inapp-bg: #FBF3E4;
+  --inapp-ink: #6B4A12;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #14161b;
-    --card-bg: #1e2128;
-    --ink: #f0f0f0;
-    --muted: #9aa2ad;
-    --accent: #FF8686;
-    --accent2: #FFD766;
-    --border: #2b2f38;
-    --banner-bg: #3a2c10;
-    --banner-ink: #FFD9A0;
-    --inapp-bg: #33290c;
-    --inapp-ink: #FFDD99;
+    --paper: #131A16;
+    --card-bg: #1B2420;
+    --ink: #EAF1EC;
+    --muted: #93A69C;
+    --pine: #6FBBA0;
+    --pine-soft: #1E3931;
+    --tag: #F0B15C;
+    --tag-ink: #2A1B00;
+    --line: #2A3A32;
+    --banner-bg: #1C3229;
+    --banner-ink: #B8E0CC;
+    --inapp-bg: #2E2410;
+    --inapp-ink: #F0CC8A;
   }
 }
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 body {
+  /* 시스템 폰트 스택만 사용 — 외부 웹폰트 임베드 금지(모바일 데이터 절약이 실제 전환에 직결되는 의도된 성능 결정) */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Malgun Gothic", sans-serif;
-  background: var(--bg);
+  background: var(--paper);
   color: var(--ink);
   max-width: 560px;
   margin: 0 auto;
@@ -55,7 +65,7 @@ a { color: inherit; }
   font-size: 12.5px;
   padding: 8px 14px;
   text-align: center;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--line);
 }
 .inapp-banner {
   background: var(--inapp-bg);
@@ -65,7 +75,14 @@ a { color: inherit; }
   padding: 8px 14px;
 }
 .profile { text-align: center; padding: 22px 16px 6px; }
-.profile h1 { font-size: 21px; margin: 4px 0; }
+.profile h1 {
+  font-size: 21px;
+  margin: 4px 0;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
 .bio { color: var(--muted); font-size: 13px; margin: 8px 0 0; }
 .search-wrap { padding: 16px 16px 4px; }
 .search {
@@ -73,14 +90,23 @@ a { color: inherit; }
   padding: 14px 18px;
   font-size: 16px;
   border-radius: 999px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   background: var(--card-bg);
   color: var(--ink);
 }
-.search:focus { outline: 2px solid var(--accent); }
+.search:focus { outline: 2px solid var(--pine); }
 .no-results { text-align: center; color: var(--muted); font-size: 13px; margin: 10px 0 0; }
 .section { padding: 6px 16px 18px; }
-.section-title { font-size: 14px; color: var(--muted); margin: 14px 4px 10px; font-weight: 600; }
+.section-title {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 14px 4px 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-left: 9px;
+  border-left: 3px solid var(--pine);
+}
 .card-list { display: flex; flex-direction: column; gap: 10px; }
 .card {
   position: relative;
@@ -88,29 +114,39 @@ a { color: inherit; }
   align-items: center;
   gap: 12px;
   background: var(--card-bg);
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 16px;
   padding: 12px;
 }
+/* 가격표 태그 느낌 — border-radius+rotate+shadow 조합만 사용(그라디언트 마스킹·구멍 뚫기 금지: 인앱브라우저 구형 WebView 호환 리스크) */
 .badge {
   position: absolute;
   top: -8px;
   left: -8px;
-  background: var(--accent2);
-  color: #3a2600;
+  background: var(--tag);
+  color: var(--tag-ink);
   font-weight: 700;
   font-size: 13px;
   min-width: 26px;
   height: 26px;
-  padding: 0 6px;
-  border-radius: 999px;
+  padding: 0 7px;
+  border-radius: 6px;
+  transform: rotate(-4deg);
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 3px rgba(0,0,0,.18);
 }
-.thumb { width: 64px; height: 64px; border-radius: 12px; object-fit: cover; flex-shrink: 0; background: #eee; }
-.thumb-fallback { display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; }
+.thumb {
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: #eee;
+  border: 1px solid var(--line);
+}
+.thumb-fallback { display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; }
 .card-body { flex: 1; min-width: 0; }
 .name {
   font-size: 14.5px;
@@ -120,20 +156,27 @@ a { color: inherit; }
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
-.price { font-size: 15px; font-weight: 700; color: var(--accent); margin-top: 3px; }
-.meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.price {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Malgun Gothic", sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--pine);
+  margin-top: 3px;
+}
+.meta { font-size: 12px; color: var(--muted); margin-top: 2px; font-variant-numeric: tabular-nums; }
 .cta {
   display: inline-block;
   margin-top: 8px;
   padding: 8px 14px;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--pine);
   color: #fff;
   text-decoration: none;
   font-size: 13px;
   font-weight: 700;
 }
-.cta:active { opacity: .8; }
+.cta:hover, .cta:active { filter: brightness(.92); }
 .footer { text-align: center; color: var(--muted); font-size: 11.5px; padding: 22px 16px 44px; }
 .footer p { margin: 4px 0; }
 </style>
@@ -155,14 +198,14 @@ a { color: inherit; }
 <section class="section">
   <h2 class="section-title">쿠팡 상품 (10)</h2>
   <div class="card-list">
-<div class="card" data-search="10 실버바"><div class="badge">10</div><div class="thumb thumb-fallback" style="background: hsl(144 70% 88%); color: hsl(144 45% 32%);">실</div><div class="card-body"><div class="name">실버바</div><a class="cta" href="https://link.coupang.com/a/fikDp90kMu" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="9 하기스 기저귀 3단계"><div class="badge">9</div><div class="thumb thumb-fallback" style="background: hsl(254 70% 88%); color: hsl(254 45% 32%);">하</div><div class="card-body"><div class="name">하기스 기저귀 3단계</div><a class="cta" href="https://link.coupang.com/a/fikWVeGtIy" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="8 미끄럼방지 욕실화"><div class="badge">8</div><div class="thumb thumb-fallback" style="background: hsl(341 70% 88%); color: hsl(341 45% 32%);">미</div><div class="card-body"><div class="name">미끄럼방지 욕실화</div><a class="cta" href="https://link.coupang.com/a/filMltCoua" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="7 에프킬라 모기·해충 스프레이"><div class="badge">7</div><div class="thumb thumb-fallback" style="background: hsl(315 70% 88%); color: hsl(315 45% 32%);">에</div><div class="card-body"><div class="name">에프킬라 모기·해충 스프레이</div><a class="cta" href="https://link.coupang.com/a/filO2f7dF6" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="6 롯데월드 입장권"><div class="badge">6</div><div class="thumb thumb-fallback" style="background: hsl(252 70% 88%); color: hsl(252 45% 32%);">롯</div><div class="card-body"><div class="name">롯데월드 입장권</div><a class="cta" href="https://link.coupang.com/a/fikM8yT4uW" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="5 아쿠아슈즈"><div class="badge">5</div><div class="thumb thumb-fallback" style="background: hsl(213 70% 88%); color: hsl(213 45% 32%);">아</div><div class="card-body"><div class="name">아쿠아슈즈</div><a class="cta" href="https://link.coupang.com/a/filIC9RrGe" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="4 어린이 물총"><div class="badge">4</div><div class="thumb thumb-fallback" style="background: hsl(20 70% 88%); color: hsl(20 45% 32%);">어</div><div class="card-body"><div class="name">어린이 물총</div><a class="cta" href="https://link.coupang.com/a/fik5fCrgDk" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="3 탄산수"><div class="badge">3</div><div class="thumb thumb-fallback" style="background: hsl(163 70% 88%); color: hsl(163 45% 32%);">탄</div><div class="card-body"><div class="name">탄산수</div><a class="cta" href="https://link.coupang.com/a/fikMgbX3lY" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="2 포카리스웨트"><div class="badge">2</div><div class="thumb thumb-fallback" style="background: hsl(12 70% 88%); color: hsl(12 45% 32%);">포</div><div class="card-body"><div class="name">포카리스웨트</div><a class="cta" href="https://link.coupang.com/a/fikJtoIKjs" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="1 토레타 이온음료"><div class="badge">1</div><div class="thumb thumb-fallback" style="background: hsl(211 70% 88%); color: hsl(211 45% 32%);">토</div><div class="card-body"><div class="name">토레타 이온음료</div><a class="cta" href="https://link.coupang.com/a/fikIgPTvWK" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div>
+<div class="card" data-search="10 실버바"><div class="badge">10</div><div class="thumb thumb-fallback" style="background: hsl(144 70% 88%); color: hsl(144 45% 32%);">실</div><div class="card-body"><div class="name">실버바</div><a class="cta" href="https://link.coupang.com/a/fikDp90kMu" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="9 하기스 기저귀 3단계"><div class="badge">9</div><div class="thumb thumb-fallback" style="background: hsl(254 70% 88%); color: hsl(254 45% 32%);">하</div><div class="card-body"><div class="name">하기스 기저귀 3단계</div><a class="cta" href="https://link.coupang.com/a/fikWVeGtIy" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="8 미끄럼방지 욕실화"><div class="badge">8</div><div class="thumb thumb-fallback" style="background: hsl(341 70% 88%); color: hsl(341 45% 32%);">미</div><div class="card-body"><div class="name">미끄럼방지 욕실화</div><a class="cta" href="https://link.coupang.com/a/filMltCoua" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="7 에프킬라 모기·해충 스프레이"><div class="badge">7</div><div class="thumb thumb-fallback" style="background: hsl(315 70% 88%); color: hsl(315 45% 32%);">에</div><div class="card-body"><div class="name">에프킬라 모기·해충 스프레이</div><a class="cta" href="https://link.coupang.com/a/filO2f7dF6" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="6 롯데월드 입장권"><div class="badge">6</div><div class="thumb thumb-fallback" style="background: hsl(252 70% 88%); color: hsl(252 45% 32%);">롯</div><div class="card-body"><div class="name">롯데월드 입장권</div><a class="cta" href="https://link.coupang.com/a/fikM8yT4uW" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="5 아쿠아슈즈"><div class="badge">5</div><div class="thumb thumb-fallback" style="background: hsl(213 70% 88%); color: hsl(213 45% 32%);">아</div><div class="card-body"><div class="name">아쿠아슈즈</div><a class="cta" href="https://link.coupang.com/a/filIC9RrGe" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="4 어린이 물총"><div class="badge">4</div><div class="thumb thumb-fallback" style="background: hsl(20 70% 88%); color: hsl(20 45% 32%);">어</div><div class="card-body"><div class="name">어린이 물총</div><a class="cta" href="https://link.coupang.com/a/fik5fCrgDk" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="3 탄산수"><div class="badge">3</div><div class="thumb thumb-fallback" style="background: hsl(163 70% 88%); color: hsl(163 45% 32%);">탄</div><div class="card-body"><div class="name">탄산수</div><a class="cta" href="https://link.coupang.com/a/fikMgbX3lY" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="2 포카리스웨트"><div class="badge">2</div><div class="thumb thumb-fallback" style="background: hsl(12 70% 88%); color: hsl(12 45% 32%);">포</div><div class="card-body"><div class="name">포카리스웨트</div><a class="cta" href="https://link.coupang.com/a/fikJtoIKjs" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="1 토레타 이온음료"><div class="badge">1</div><div class="thumb thumb-fallback" style="background: hsl(211 70% 88%); color: hsl(211 45% 32%);">토</div><div class="card-body"><div class="name">토레타 이온음료</div><a class="cta" href="https://link.coupang.com/a/fikIgPTvWK" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div>
   </div>
 </section>
 
 <section class="section">
   <h2 class="section-title">네이버 쇼핑커넥트 (7)</h2>
   <div class="card-list">
-<div class="card" data-search="비에논 우레이드 기미앰플"><div class="thumb thumb-fallback" style="background: hsl(22 70% 88%); color: hsl(22 45% 32%);">비</div><div class="card-body"><div class="name">비에논 우레이드 기미앰플</div><div class="price">36,800원</div><div class="meta">평점 4.62 · 리뷰 6,138</div><a class="cta" href="https://naver.me/FpwgyE4j" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="바자르 냉감 이불 ss"><div class="thumb thumb-fallback" style="background: hsl(96 70% 88%); color: hsl(96 45% 32%);">바</div><div class="card-body"><div class="name">바자르 냉감 이불 SS</div><div class="price">27,900원</div><div class="meta">평점 4.81 · 리뷰 4,532</div><a class="cta" href="https://naver.me/IGseN8MR" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="잇퓨 율무 나이아신아마이드 순율 크림 50ml"><div class="thumb thumb-fallback" style="background: hsl(37 70% 88%); color: hsl(37 45% 32%);">잇</div><div class="card-body"><div class="name">잇퓨 율무 나이아신아마이드 순율 크림 50ml</div><div class="price">24,900원</div><div class="meta">평점 4.55 · 리뷰 11,858</div><a class="cta" href="https://naver.me/FVFOWI25" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="미라클뮤즈 aha bha 메디크림"><div class="thumb thumb-fallback" style="background: hsl(93 70% 88%); color: hsl(93 45% 32%);">미</div><div class="card-body"><div class="name">미라클뮤즈 AHA BHA 메디크림</div><div class="price">28,900원</div><div class="meta">평점 4.66 · 리뷰 17,506</div><a class="cta" href="https://naver.me/GhwAFGc0" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="닥터블랭크 저자극 올인원 강아지 샴푸"><div class="thumb thumb-fallback" style="background: hsl(138 70% 88%); color: hsl(138 45% 32%);">닥</div><div class="card-body"><div class="name">닥터블랭크 저자극 올인원 강아지 샴푸</div><div class="price">14,900원</div><div class="meta">평점 4.89 · 리뷰 6,950</div><a class="cta" href="https://naver.me/xWId2nUp" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="세면대 워터탭 아기 비데 회전 수전 (스윙1+필터3)"><div class="thumb thumb-fallback" style="background: hsl(327 70% 88%); color: hsl(327 45% 32%);">세</div><div class="card-body"><div class="name">세면대 워터탭 아기 비데 회전 수전 (스윙1+필터3)</div><div class="price">19,800원</div><div class="meta">평점 4.84 · 리뷰 31,076</div><a class="cta" href="https://naver.me/Ix0cYBlQ" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div><div class="card" data-search="온다숲 천연 제습제 5개 (반영구·국산)"><div class="thumb thumb-fallback" style="background: hsl(282 70% 88%); color: hsl(282 45% 32%);">온</div><div class="card-body"><div class="name">온다숲 천연 제습제 5개 (반영구·국산)</div><div class="price">23,900원</div><div class="meta">평점 4.73 · 리뷰 5,705</div><a class="cta" href="https://naver.me/xB7AgHyp" target="_blank" rel="nofollow sponsored noopener">👉 최저가 보러가기</a></div></div>
+<div class="card" data-search="비에논 우레이드 기미앰플"><div class="thumb thumb-fallback" style="background: hsl(22 70% 88%); color: hsl(22 45% 32%);">비</div><div class="card-body"><div class="name">비에논 우레이드 기미앰플</div><div class="price">36,800원</div><div class="meta">평점 4.62 · 리뷰 6,138</div><a class="cta" href="https://naver.me/FpwgyE4j" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="바자르 냉감 이불 ss"><div class="thumb thumb-fallback" style="background: hsl(96 70% 88%); color: hsl(96 45% 32%);">바</div><div class="card-body"><div class="name">바자르 냉감 이불 SS</div><div class="price">27,900원</div><div class="meta">평점 4.81 · 리뷰 4,532</div><a class="cta" href="https://naver.me/IGseN8MR" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="잇퓨 율무 나이아신아마이드 순율 크림 50ml"><div class="thumb thumb-fallback" style="background: hsl(37 70% 88%); color: hsl(37 45% 32%);">잇</div><div class="card-body"><div class="name">잇퓨 율무 나이아신아마이드 순율 크림 50ml</div><div class="price">24,900원</div><div class="meta">평점 4.55 · 리뷰 11,858</div><a class="cta" href="https://naver.me/FVFOWI25" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="미라클뮤즈 aha bha 메디크림"><div class="thumb thumb-fallback" style="background: hsl(93 70% 88%); color: hsl(93 45% 32%);">미</div><div class="card-body"><div class="name">미라클뮤즈 AHA BHA 메디크림</div><div class="price">28,900원</div><div class="meta">평점 4.66 · 리뷰 17,506</div><a class="cta" href="https://naver.me/GhwAFGc0" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="닥터블랭크 저자극 올인원 강아지 샴푸"><div class="thumb thumb-fallback" style="background: hsl(138 70% 88%); color: hsl(138 45% 32%);">닥</div><div class="card-body"><div class="name">닥터블랭크 저자극 올인원 강아지 샴푸</div><div class="price">14,900원</div><div class="meta">평점 4.89 · 리뷰 6,950</div><a class="cta" href="https://naver.me/xWId2nUp" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="세면대 워터탭 아기 비데 회전 수전 (스윙1+필터3)"><div class="thumb thumb-fallback" style="background: hsl(327 70% 88%); color: hsl(327 45% 32%);">세</div><div class="card-body"><div class="name">세면대 워터탭 아기 비데 회전 수전 (스윙1+필터3)</div><div class="price">19,800원</div><div class="meta">평점 4.84 · 리뷰 31,076</div><a class="cta" href="https://naver.me/Ix0cYBlQ" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div><div class="card" data-search="온다숲 천연 제습제 5개 (반영구·국산)"><div class="thumb thumb-fallback" style="background: hsl(282 70% 88%); color: hsl(282 45% 32%);">온</div><div class="card-body"><div class="name">온다숲 천연 제습제 5개 (반영구·국산)</div><div class="price">23,900원</div><div class="meta">평점 4.73 · 리뷰 5,705</div><a class="cta" href="https://naver.me/xB7AgHyp" target="_blank" rel="nofollow sponsored noopener">상품 보러가기 →</a></div></div>
   </div>
 </section>
 
